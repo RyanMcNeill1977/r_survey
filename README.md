@@ -1,1 +1,2 @@
-# r_survey
+# Analyzing survey data with R
+
