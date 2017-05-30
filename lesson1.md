@@ -42,6 +42,11 @@ And just like with Haven, we need to tell R to use it.
 library("survey")
 ```
 
+Now we need to tell R's Survey package how our data is set up. You'll see in the ACS data that there's a field for household weights and another for people. So if we're counting household-level things, we want to use the household
+
+Let's keep things simple. 
+dclus1 <- svydesign(id=~dnum, weights=~pw, data=apiclus1)
+
 
 
 
