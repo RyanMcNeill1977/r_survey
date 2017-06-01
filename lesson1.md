@@ -85,7 +85,7 @@ svytotal(~race, design=my_data.pw)
 Uh oh. Did you get 593043987 for the answer? That's because R is treating the field like a continuous variable. Instead of giving us totals for each race, it is summing up the total. That's because we need to tell R that field is a [factor](https://www.stat.berkeley.edu/classes/s133/factors.html). 
 
 ```R
-my_data$race <- as.factor(my_data$race)
+my_data$race <- factor(my_data$race)
 ```
 
 OK. Now we have to re-run our original svydesign command. Now that we've changed the data type of a field, we need to tell Survey to rescan the table. 
@@ -123,7 +123,7 @@ Remember the formula we used earlier to tell R race is a factor? Let's rerun tha
 We're adding two arguments. First, the levels argument tells R the range of the possible values. As you can see, 1:9 is shorthand for 1,2,3,4,5,6,7,8,9. Then we're also using the labels argument, which tells R the corresponding values.  
 
 ```R
-my_data$race <- as.factor(my_data$race, levels = c(1:9), labels = c("white","black","american indian","chinese","japanese","other asian", "other race", "two major races", "three or more major races"))
+my_data$race <- factor(my_data$race, levels = c(1:9), labels = c("white","black","american indian","chinese","japanese","other asian", "other race", "two major races", "three or more major races"))
 ```
 
 Don't forget to rerun the svydesign formula. 
@@ -131,4 +131,45 @@ Don't forget to rerun the svydesign formula.
 ```R
 my_data.pw <- svydesign(ids=~0, weights=~perwt, data=my_data)
 ```
+
+OK, finally, let's rerun our race query. 
+
+```R
+svytotal(~race, design=my_data.pw)
+```
+
+Great success. 
+
+OK, let's do some calculations on the hispan variable. We know from our documentation that the values are:
+
+|Value | Label |
+|------|-------|
+|0	| Not Hispanic |
+|1	| Mexican |
+|2	| Puerto Rican |
+|3	| Cuban |
+|4	| Other |
+|9	| Not Reported |
+
+So let's tell R that the hispan variable is a factor and assign the labels. 
+
+my_data$hispan <- factor(my_data$hispan, levels = c(0,1,2,3,4,9), labes = c("not hispanic","mexican","puerto rican", "cuban", "other", "not reported"))
+
+Now let's say you want to know the count of Hispanics by state. Let's use another method from the Survey package. 
+
+```R
+svyby(~hispan, by=~statefip, design=my_data.pw, FUN = svytotal)
+```
+
+Hmm. The output is a bit of a mess. Generally, we really just want to know whether the person is Hispanic or not Hispanic. To do that, let's recode into a new variable. 
+
+|Original Value | Label | Recoded |
+|---------------|-------|---------|
+|0	| Not Hispanic | 0 |
+|1	| Mexican | 1 |
+|2	| Puerto Rican | 1 |
+|3	| Cuban | 1 |
+|4	| Other | 1 |
+|9	| Not Reported | 1 |
+
 
