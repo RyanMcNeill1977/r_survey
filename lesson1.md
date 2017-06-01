@@ -47,9 +47,40 @@ Now we need to tell R's Survey package how our data is set up. You'll see in the
 Let's keep things simple. The code below will create an object that holds the survey design information. 
 
 ```R
-my_data.pw <- svydesign(id=~1, weights=~perwt, data=my_data)
+my_data.pw <- svydesign(ids=~0, weights=~perwt, data=my_data)
 ```
 
+The ids variable specifies the cluster ids. You can use ~0 or ~1 for no clusters. As you can see, we used the perwt for weights because we want to analyze people-level things. If you plan to analyze both levels, you might want to create another svydesign object. This time just change the name of the object (I used .hw for household weight). 
 
+```R
+my_data.hw <- svydesign(ids=~0, weights=~hhwt, data=my_data)
+```
 
+OK. Now let's start analyzing the data. The first thing I always like to do is take a top-level look at my data to make sure I've got the data imported with all the records. The way I do it is by getting a sum of the population. We can do this just by summing up the weights. 
+
+```R
+sum(my_data$perwt)
+```
+
+Now let's do an estimate of population by state. Let's use aggregate. 
+
+```R
+aggregate(perwt ~ statefip, my_data, sum)
+```
+
+Want to store your results? Simply assign the aggregate formula to a new object. 
+
+```R
+state_pops <- aggregate(perwt ~ statefip, my_data, sum)
+```
+
+Now double click on the new state_pops object in the Global Environment to see your new table. 
+
+OK, so we haven't used the survey object we created earlier. The Survey package has some methods that make some calculations easier. Let's say we wanted to know the breakdown by race. We can use svytotal.
+
+```R
+svytotal(~race, design=my_data.pw)
+```
+
+Uh oh. Did you get 593043987 for the answer? 
 
