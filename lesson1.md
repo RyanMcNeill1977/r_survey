@@ -210,3 +210,26 @@ What if you want to know the percentage of Hispanics by state?
 ```R
 svyby(~hispanic, by=~statefip, design=my_data.pw, FUN = svymean)
 ```
+
+### Subsetting your data
+
+Often you'll want to slice off a piece of your data to analyze. For example, you might want to just look at a certain state. Or people of a certain profession. Or just women. You get the point. It's [pretty easy](http://www.statmethods.net/management/subset.html). 
+
+Let's grab just Oklahoma. 
+
+```R
+oklahoma <- subset(my_data, statefip == 40)
+```
+
+What if you want Oklahomans who are 18 or older?
+
+```R
+oklahoma_adults <- subset(my_data, statefip == 40 & age >= 18)
+```
+
+OK, maybe our dataset is a little unwieldy. We have more columns than we need. Let's just grab the ones we want. First we'll create a variable that holds our column names, then we'll use it to select our columns. 
+
+```R
+myvars <- c("region","statefip","pernum","perwt","sex","age","race","hispanic_new","educ")
+newdata <- my_data[myvars]
+```
