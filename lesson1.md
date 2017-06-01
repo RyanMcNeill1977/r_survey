@@ -76,11 +76,26 @@ state_pops <- aggregate(perwt ~ statefip, my_data, sum)
 
 Now double click on the new state_pops object in the Global Environment to see your new table. 
 
-OK, so we haven't used the survey object we created earlier. The Survey package has some methods that make some calculations easier. Let's say we wanted to know the breakdown by race. We can use svytotal.
+OK, so we haven't used the survey object we created earlier. The Survey package has some methods that make some calculations easier. Let's say we wanted to know the breakdown by race. We can use svytotal. In previous calculations, we referred to our original data. Now we're instead going to refer to our my_data.pw object. 
 
 ```R
 svytotal(~race, design=my_data.pw)
 ```
 
-Uh oh. Did you get 593043987 for the answer? 
+Uh oh. Did you get 593043987 for the answer? That's because R is treating the field like a continuous variable. Instead of giving us totals for each race, it is summing up the total. That's because we need to tell R that field is a [factor](https://www.stat.berkeley.edu/classes/s133/factors.html). 
 
+```R
+my_data$race <- as.factor(my_data$race)
+```
+
+OK. Now we have to re-run our original svydesign command. Now that we've changed the data type of a field, we need to tell Survey to rescan the table. 
+
+```R
+my_data.pw <- svydesign(ids=~0, weights=~perwt, data=my_data)
+```
+
+Now let's rerun our race analysis. 
+
+```R
+my_data$race <- as.factor(my_data$race)
+```
