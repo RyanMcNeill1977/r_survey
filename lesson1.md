@@ -118,9 +118,17 @@ Now that's not terribly helpful. One thing we can do is tell R what each number 
 |9	| Three or more major races
 
 
+Remember the formula we used earlier to tell R race is a factor? Let's rerun that, but with more information. 
 
+We're adding two arguments. First, the levels argument tells R the range of the possible values. As you can see, 1:9 is shorthand for 1,2,3,4,5,6,7,8,9. Then we're also using the labels argument, which tells R the corresponding values.  
 
-mydata$v1 <- factor(mydata$v1,
-levels = c(1,2,3),
-labels = c("red", "blue", "green"))
+```R
+my_data$race <- as.factor(my_data$race, levels = c(1:9), labels = c("white","black","american indian","chinese","japanese","other asian", "other race", "two major races", "three or more major races"))
+```
+
+Don't forget to rerun the svydesign formula. 
+
+```R
+my_data.pw <- svydesign(ids=~0, weights=~perwt, data=my_data)
+```
 
