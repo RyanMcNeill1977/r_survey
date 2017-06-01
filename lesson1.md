@@ -153,7 +153,9 @@ OK, let's do some calculations on the hispan variable. We know from our document
 
 So let's tell R that the hispan variable is a factor and assign the labels. 
 
+```R
 my_data$hispan <- factor(my_data$hispan, levels = c(0,1,2,3,4,9), labes = c("not hispanic","mexican","puerto rican", "cuban", "other", "not reported"))
+```
 
 Now let's say you want to know the count of Hispanics by state. Let's use another method from the Survey package. 
 
@@ -172,4 +174,9 @@ Hmm. The output is a bit of a mess. Generally, we really just want to know wheth
 |4	| Other | 1 |
 |9	| Not Reported | 1 |
 
+So the easiest way to do this is using a package called plyr, so you can use revalue. 
 
+```R
+library(plyr)
+my_data$hispanic_new <- revalue(my_data$hispan, c("not hispanic"="0","mexican"="1","puerto rican"="1","cuban"="1","other"="1","not reported" = "0"))
+```
