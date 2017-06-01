@@ -199,3 +199,14 @@ Don't forget to regenerate the svydesign object.
 my_data.pw <- svydesign(ids=~0, weights=~perwt, data=my_data)
 ```
 
+So what percentage of the population is Hispanic?
+
+```R
+svymean(~hispanic_new, my_data.pw)
+```
+
+What if you want to know the percentage of Hispanics by state?
+
+```R
+svyby(~hispanic, by=~statefip, design=my_data.pw, FUN = svymean)
+```
