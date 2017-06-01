@@ -97,10 +97,30 @@ my_data.pw <- svydesign(ids=~0, weights=~perwt, data=my_data)
 Now let's rerun our race analysis. 
 
 ```R
-my_data$race <- as.factor(my_data$race)
+svytotal(~race, design=my_data.pw)
 ```
 
 
+![Here's what you want.](survey1.jpg)
+
+Now that's not terribly helpful. One thing we can do is tell R what each number means. We know from the iPUMS documentation that race has the following values: 
+
+|Value	| Label |
+|-------|-------|
+|1	| White
+|2	| Black/Negro
+|3	| American Indian or Alaska Native
+|4	| Chinese
+|5	| Japanese
+|6	| Other Asian or Pacific Islander
+|7	| Other race, nec
+|8	| Two major races
+|9	| Three or more major races
 
 
+
+
+mydata$v1 <- factor(mydata$v1,
+levels = c(1,2,3),
+labels = c("red", "blue", "green"))
 
