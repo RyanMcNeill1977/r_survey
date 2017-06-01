@@ -1,6 +1,6 @@
 
 
-###Reading in foreign file formats
+### Reading in foreign file formats
 
 We downloaded the iPUMS data in Stata format. Stata, like SAS or SPSS, are costly statistical packages. R can't natively import these file formats, so we need to use a package to read them. I use [Haven](https://cran.r-project.org/web/packages/haven/haven.pdf). 
 
@@ -42,11 +42,13 @@ And just like with Haven, we need to tell R to use it.
 library("survey")
 ```
 
-Now we need to tell R's Survey package how our data is set up. You'll see in the ACS data that there's a field for household weights and another for people. So if we're counting household-level things, we want to use the household
+Now we need to tell R's Survey package how our data is set up. You'll see in the ACS data that there's a field for household weights and another for people. So if we're counting household-level things, we want to use the household weight (hhwt). If you're counting people-level things, you want to use the person weight (perwt). 
 
-Let's keep things simple. 
-dclus1 <- svydesign(id=~dnum, weights=~pw, data=apiclus1)
+Let's keep things simple. The code below will create an object that holds the survey design information. 
 
+```R
+my_data.pw <- svydesign(id=~1, weights=~perwt, data=my_data)
+```
 
 
 
