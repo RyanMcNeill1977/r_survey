@@ -174,9 +174,28 @@ Hmm. The output is a bit of a mess. Generally, we really just want to know wheth
 |4	| Other | 1 |
 |9	| Not Reported | 1 |
 
-So the easiest way to do this is using a package called plyr, so you can use revalue. 
+So the easiest way to do this is using a package called plyr, so you can use revalue. So lets tell R to use plyr and then recode into a new variable. 
 
 ```R
 library(plyr)
 my_data$hispanic_new <- revalue(my_data$hispan, c("not hispanic"="0","mexican"="1","puerto rican"="1","cuban"="1","other"="1","not reported" = "0"))
 ```
+
+So now let's make sure it worked. 
+
+```R
+aggregate(perwt ~ hispanic_new, my_data, sum)
+```
+
+Ok. Let's say you want to rename the variables. You can use revalue again. 
+
+```R
+my_data$hispanic_new <- revalue(my_data$hispanic_new, c("0"="not hispanic", "1" = "hispanic"))
+```
+
+Don't forget to regenerate the svydesign object. 
+
+```R
+my_data.pw <- svydesign(ids=~0, weights=~perwt, data=my_data)
+```
+
