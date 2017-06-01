@@ -184,7 +184,7 @@ my_data$hispanic_new <- revalue(my_data$hispan, c("not hispanic"="0","mexican"="
 So now let's make sure it worked. 
 
 ```R
-aggregate(perwt ~ hispanic_new, my_data, sum)
+svytotal(~hispanic_new, design=my_data.pw)
 ```
 
 Ok. Let's say you want to rename the variables. You can use revalue again. 
