@@ -1,5 +1,8 @@
 # Analyzing weighted survey data with R
 
+Of course, the first thing we need to do is load our data into R. Whenever I download data from iPUMS, I like to grab it as one of the main statistical package formats: SAS, SPSS or Stata. But R doesn't natively read those formats, so first we need to install a package that tells R how to read the data. 
+
+
 ### Reading in foreign file formats
 
 We downloaded the iPUMS data in Stata format. Stata, like SAS or SPSS, are costly statistical packages. R can't natively import these file formats, so we need to use a package to read them. I use [Haven](https://cran.r-project.org/web/packages/haven/haven.pdf). 
