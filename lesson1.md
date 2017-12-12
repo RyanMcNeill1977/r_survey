@@ -8,24 +8,15 @@ So first thing we need to do is install the [tidyverse](https://www.tidyverse.or
 
 So let's run this bit of code: 
 
-'''R
+```R
 install.packages("tidyverse")
-'''
-
-
-
+```
 
 ### Reading in foreign file formats
 
-We downloaded the iPUMS data in Stata format. Stata, like SAS or SPSS, are costly statistical packages. R can't natively import these file formats, so we need to use a package to read them. I use [Haven](https://cran.r-project.org/web/packages/haven/haven.pdf). 
+We downloaded the iPUMS data in Stata format. Stata, like SAS or SPSS, are costly statistical packages. R can't natively import these file formats, so we need to use a package to read them. When we installed the tidyverse packages, it installed [Haven](http://haven.tidyverse.org/). 
 
-Let's install Haven. 
-
-```R
-install.packages("haven")
-```
-
-Now let's set our working directory 
+First things first, let's set our working directory. This is the place where we're going to store all our files for this particular project. Substitute your file path in place of mine (notice the slashes are forward instead of backwards). 
 
 ```R
 setwd("D:/newdata2/survey")
@@ -34,7 +25,7 @@ setwd("D:/newdata2/survey")
 And before you can actually use a package like Haven, you have to tell R to load it. Let's do that. 
 
 ```R
-library(haven)
+library(tidyverse)
 ```
 
 OK, now we're ready to load our data. We're going to load the data and assign it to the my_data object. 
@@ -42,6 +33,15 @@ OK, now we're ready to load our data. We're going to load the data and assign it
 ```R
 my_data <- read_dta("usa_00022.dta")
 ```
+
+You're probably wondering: WTF is an object?
+
+Well, everything in R is an object. An object is a piece of data that has some attributes and methods. In oth
+
+
+---------------------------------------------------------updates stopped here, come back to this
+
+
 
 The most important thing about dealing with survey data like the ACS or CPS is the use of a weight variable. Each record is weighted. For example, your first record might have a weight of 1.76. That means it is not counted one time, but rather 1.76 times. Doing these calculations in SQL could be a pain, but it's quite a bit easier with a statistical package like R. 
 
