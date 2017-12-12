@@ -2,6 +2,18 @@
 
 Of course, the first thing we need to do is load our data into R. Whenever I download data from iPUMS, I like to grab it as one of the main statistical package formats: SAS, SPSS or Stata. But R doesn't natively read those formats, so first we need to install a package that tells R how to read the data. 
 
+With R and many other languages, such as Python or Ruby, the true power comes from the ability to use little bits of code written by other people to accomplish tasks. In the R world, these are called packages. 
+
+So first thing we need to do is install the [tidyverse](https://www.tidyverse.org/), which is a bunch of packages that have some pretty critical tools to do data science tasks in R. 
+
+So let's run this bit of code: 
+
+'''R
+install.packages("tidyverse")
+'''
+
+
+
 
 ### Reading in foreign file formats
 
